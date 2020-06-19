@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { State } from '../reducers/index';
 
-import { AddMoneyAction, AddPowerAction } from '../actions/actions';
-
 import { Survey, Incentive } from '../survey_processors/survey_processors';
+import { MoneyIncentive } from '../survey_processors/money_incentive';
+import { PowerIncentive } from '../survey_processors/power_incentive';
 
 @Injectable({
 	providedIn: 'root'
@@ -14,7 +14,7 @@ export class SurveyProcessAndStorageService {
 	incentives: Incentive[];
 
 	constructor(private store: Store<State>) {
-		this.incentives = [ new MoneyIncentive(), new PowerIncentive() ]; // Hardcoded here.  In SARA, I'd prefer a pub/sub model.
+		this.incentives = [ new MoneyIncentive(), new PowerIncentive() ]; // The only place we have to writ out a list of all the incentives.  It's similar to registering a service in a module.
 	}
 
 	processSurvey(survey: Survey){
@@ -23,14 +23,3 @@ export class SurveyProcessAndStorageService {
 		}
 	}
 }
-
-class MoneyIncentive implements Incentive {
-	constructor(){}
-	getIncentive(survey: Survey){ return new AddMoneyAction({amount: survey.money}); }
-}
-
-class PowerIncentive implements Incentive {
-	constructor(){}
-	getIncentive(survey: Survey){ return new AddPowerAction({amount: survey.power}); }
-}
-
