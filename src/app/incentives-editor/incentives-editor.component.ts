@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { NgxPubSubService } from '@pscoped/ngx-pub-sub';
 
-import { SurveyProcessAndStorageService } from '../services/survey-process-and-storage.service';
+import { BrokerService } from '../services/broker.service';
 import { Survey } from '../survey_processors/survey_processors';
 
 @Component({
@@ -13,7 +14,7 @@ export class IncentivesEditorComponent implements OnInit {
 	money_input = 0;
 	power_input = 0;
 
-	constructor(private process: SurveyProcessAndStorageService) { }
+	constructor(private broker: BrokerService, private pubSub: NgxPubSubService) { }
 
 	ngOnInit(): void {
 	}
@@ -23,7 +24,7 @@ export class IncentivesEditorComponent implements OnInit {
 			money: Number(this.money_input),
 			power: Number(this.power_input)	
 		}
-		this.process.processSurvey(survey);
+		this.pubSub.publishEvent(this.broker.EventTypes.surveyCompleted, survey);
 	}
 
 }

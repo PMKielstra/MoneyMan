@@ -8,6 +8,8 @@ import { IncentivesEditorComponent } from './incentives-editor/incentives-editor
 import { StoreModule } from '@ngrx/store';
 import { reducers, metaReducers } from './reducers';
 
+import { NgxPubSubModule } from '@pscoped/ngx-pub-sub';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -16,6 +18,7 @@ import { reducers, metaReducers } from './reducers';
   ],
   imports: [
     FormsModule,
+    NgxPubSubModule,
     BrowserModule,
     StoreModule.forRoot(reducers, {
       metaReducers
